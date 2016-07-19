@@ -9,10 +9,7 @@
 
 h1 {
   margin: 0;
-  padding: 10px; 
-  background-color: #253440;
-  color: #fff;
-  border-bottom: 1px solid #263237;  
+  padding: 10px;
 }
 
 form {
@@ -49,6 +46,26 @@ button {
   padding: 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.header-banner {
+  background-color: #253440;
+  color: #fff;
+  border-bottom: 1px solid #263237;  
+}
+
+.user-name {
+  background: grey;
+  padding: 4px;
+  margin: 8px;
 }
 
 .header {  
