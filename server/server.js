@@ -33,10 +33,10 @@ createDb();
 
 
 // Configure Jade template engine
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "jade");
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/socket.io", express.static(path.join(__dirname, "node_modules/socket.io-client/")));
+app.use(express.static(path.join(__dirname + "/../", "public")));
+app.use("/socket.io", express.static(path.join(__dirname, "../node_modules/socket.io-client/")));
 
 // handle HTTP GET request to the "/" URL
 app.get("/", function(req, res) {
