@@ -1,15 +1,15 @@
 {
 	"jokes": [
-		{ who: "Cash", punchline: "No thanks, but I would like a peanut instead!" },
-		{ who: "Doris", punchline: "Doris locked, that's why I'm knocking!" },
-		{ who: "Cows go", punchline: "No, cows go moo!" },
-		{ who: "Oink oink", punchline: "Make up your mind, are you a pig or an owl?!" },
-		{ who: "Olive", punchline: "Olive right next door to you!" },
-		{ who: "Water", punchline: "Water you doing in my house?!" },
-		{ who: "Nobel", punchline: "No bell, that's why I'm knocking!" },
-		{ who: "Alpaca", punchline: "Alpaca the the trunk, you pack the suitcase!" },
-		{ who: "Shelly", punchline: "Shelly compare thee to a summer's day?" },
-		{ who: "Et", punchline: "Et tu, Brute? Then fall, Caesar!" },
-		{ who: "Toby", punchline: "Toby or not Toby, that is the question." }
+		{ "who": "Cash", "punchline": "No thanks, but I would like a peanut instead!" },
+		{ "who": "Doris", "punchline": "Doris locked, that's why I'm knocking!" },
+		{ "who": "Cows go", "punchline": "No, cows go moo!" },
+		{ "who": "Oink oink", "punchline": "Make up your mind, are you a pig or an owl?!" },
+		{ "who": "Olive", "punchline": "Olive right next door to you!" },
+		{ "who": "Water", "punchline": "Water you doing in my house?!" },
+		{ "who": "Nobel", "punchline": "No bell, that's why I'm knocking!" },
+		{ "who": "Alpaca", "punchline": "Alpaca the the trunk, you pack the suitcase!" },
+		{ "who": "Shelly", "punchline": "Shelly compare thee to a summer's day?" },
+		{ "who": "Et", "punchline": "Et tu, Brute? Then fall, Caesar!" },
+		{ "who": "Toby", "punchline": "Toby or not Toby, that is the question." }
 	]
 }

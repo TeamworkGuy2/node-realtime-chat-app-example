@@ -1,6 +1,6 @@
 {
-  "name": "realtime-chat-app",
-  "version": "0.1.1",
+  "name": "node-realtime-chat-app-example",
+  "version": "0.1.2",
   "scripts": {
     "start": "node server/server.js"
   },

@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.1.1](N/A) - 2016-07-19
+### [0.1.2](N/A) - 2016-07-20
+#### Added
+Setup server.js for easier administration
+
+
+--------
+### [0.1.1](https://github.com/TeamworkGuy2/node-realtime-chat-app-example/commit/94b332cf32113316310d223650d512de0a5770d5) - 2016-07-19
 #### Added
 README.md and CHANGELOG.md
 
