@@ -4,7 +4,14 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.1.2](N/A) - 2016-07-20
+### [0.2.0](N/A) - 2016-07-26
+#### Changed
+* Refactored message format and types of messages (now includes 'query').
+* Changed 'when' property from Date to timestamp
+
+
+--------
+### [0.1.2](https://github.com/TeamworkGuy2/node-realtime-chat-app-example/commit/58cb13ea7dc6e4bcb4c1ac47486528cdfcdfc5d8) - 2016-07-20
 #### Added
 Setup server.js for easier administration
 

@@ -16,7 +16,7 @@ httpServer.listen(process.env.PORT || socketPort);
 
 // Connect to DB
 var dbConn;
-var dbColl_Messages;
+var msgsCollection;
 
 function createDb() {
   dbConn = db.newInMemDb({
@@ -27,10 +27,20 @@ function createDb() {
     }]
   });
 
-  dbColl_Messages = dbConn.getCollection("messages");
+  msgsCollection = dbConn.getCollection("messages");
 }
 
 createDb();
+
+function getSortedItems() {
+  return msgsCollection.getItems().sort(function (a, b) {
+    return a.when < b.when ? 1 : a.when > b.when ? -1: 0;
+  });
+}
+
+function copyCollection(items) {
+  return JSON.parse(JSON.stringify(items));
+}
 
 
 // Configure Jade template engine
@@ -45,9 +55,8 @@ app.get("/", function (req, res) {
   console.log("requesting - " + req.method + " " + req.url);
 
   // Get the 100 most recent messages from the DB
-  var items = dbColl_Messages.getItems().sort(function (a, b) {
-    return a.when < b.when ? 1 : a.when > b.when ? -1: 0;
-  });
+  var items = copyCollection(getSortedItems());
+  items.forEach(function (i) { i.isPost = i.action == "user-posted-message"; });
 
   // Pass the message list to the view
   res.render("index", { messages: items });    
@@ -65,34 +74,71 @@ ioSocket.on("connection", function (socket) {
 
   // When a message is received, broadcast it 
   // to all users except the originating client
-  socket.on("msg", function (data) {
-    console.log("message: ", data);
+  socket.on("msg", function (msgData) {
+    console.log("message: ", msgData);
 
-    dbColl_Messages.addItem(data);
-    socket.broadcast.emit("msg", data);
+    msgData.action = "user-posted-message";
+    msgData.isPost = true;
+    msgsCollection.addItem(msgData);
+
+    socket.broadcast.emit("msg", msgData);
   });
+
 
   // When a user joins the chat, send a notice
   // to all users except the originating client
-  socket.on("join", function (nickname) {
+  socket.on("join", function (joinData) {
+    var nickname = joinData.nickname;
     users.push(socket);
 
     console.log("join: ", nickname, "(" + users.length + " users)");
 
+    joinData.action = "user-connected";
+    joinData.msg = nickname + " has joined the chat.";
+    msgsCollection.addItem(joinData);
     // Attach the user's nickname to the socket
     socket.nickname = nickname;
-    socket.broadcast.emit("notice", nickname + " has joined the chat.");
+    socket.broadcast.emit("notice", joinData);
+    socket.emit("notice", joinData);
   });
+
 
   // When a user renames themself, send a notice
   // to all users except the originating client
-  socket.on("rename", function (oldName, newName) {
+  socket.on("rename", function (renameData) {
+    var oldName = renameData.oldName;
+    var newName = renameData.newName;
+
     console.log("rename: ", oldName, "to", newName);
 
+    renameData.action = "user-renamed";
+    renameData.msg = oldName + " has renamed themself " + newName;
+    msgsCollection.addItem(renameData);
     // Attach the user's nickname to the socket
     socket.nickname = newName;
-    socket.broadcast.emit("notice", oldName + " has renamed themself " + newName);
+    socket.broadcast.emit("notice", renameData);
   });
+
+
+  socket.on("query", function (queryData) {
+    var min  = queryData.minTimestamp || Number.MIN_SAFE_INTEGER;
+    var max  = queryData.maxTimestamp || Number.MAX_SAFE_INTEGER;
+
+    var items = getSortedItems();
+    var res = [];
+
+    for(var i = 0, size = items.length; i < size; i++) {
+      var item = items[i];
+      if(min < item.when && max > item.when) {
+        res.push(item);
+      }
+    }
+
+    console.log("query min: " + min + ", max: " + max + ", " + res.length + " matches of " + items.length);
+
+    socket.emit("query", res);
+  });
+
 
   // When a user disconnects, send a notice
   // to all users except the originating client
@@ -101,8 +147,17 @@ ioSocket.on("connection", function (socket) {
 
     console.log("leave: ", socket.nickname, "(" + users.length + " users)");
 
-    socket.broadcast.emit("notice", socket.nickname + " has left the chat.");
+    var leaveData = {
+      action: "user-disconnect",
+      msg: socket.nickname + " has left the chat.",
+      nickname: socket.nickname,
+      when: Date.now()
+    };
+    msgsCollection.addItem(leaveData);
+
+    socket.broadcast.emit("notice", leaveData);
   });
+
 });
 
 

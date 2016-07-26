@@ -15,12 +15,15 @@ html(lang='en')
       input(id='msg', autocomplete='off', autofocus)
       button(type='submit') Send
     ul#messages
-      - for(var i=0,ln=messages.length;i<ln;i++)      
-        li
-          .header.clearfix
-            .who= messages[i].nickname
-            .when= new Date(messages[i].when).toString().substr(0, 24)
-          .msg= messages[i].msg
+      - for(var i=0,ln=messages.length;i<ln;i++)
+        if(messages[i].isPost)
+          li(data-post-date=messages[i].when)
+            .header.clearfix
+              .who= messages[i].nickname
+              .when= new Date(messages[i].when).toString().substr(0, 24)
+            .msg= messages[i].msg
+        else
+          div(data-post-date=messages[i].when).notice= messages[i].msg
     script(src='//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js')
     script(src='/socket.io/socket.io.js')
     script(src='/javascripts/client.js')
