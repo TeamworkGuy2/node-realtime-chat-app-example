@@ -52,7 +52,7 @@ app.use("/socket.io", express.static(path.join(__dirname, "../node_modules/socke
 // handle HTTP GET request to the "/" URL
 app.get("/", function (req, res) {
 
-  console.log("requesting - " + req.method + " " + req.url);
+  console.log("requesting: " + req.method + " " + req.url);
 
   // Get the 100 most recent messages from the DB
   var items = copyCollection(getSortedItems());
@@ -69,7 +69,7 @@ app.listen(webPort, function () {
 
 var users = [];
 
-// socket.io listen for messages
+// socket.io connection to listen for messages
 ioSocket.on("connection", function (socket) {
 
   // When a message is received, broadcast it 
@@ -120,6 +120,8 @@ ioSocket.on("connection", function (socket) {
   });
 
 
+  // 'query' expects an object with min and/or max timestamps and sends back
+  // an array of messages which have a timestamp falling within that range
   socket.on("query", function (queryData) {
     var min  = queryData.minTimestamp || Number.MIN_SAFE_INTEGER;
     var max  = queryData.maxTimestamp || Number.MAX_SAFE_INTEGER;
@@ -165,33 +167,35 @@ ioSocket.on("connection", function (socket) {
 
 /** remove the first matching element from an array */
 function remove(ary, val) {
-    for (var i = 0, size = ary.length; i < size; i++) {
-        if (ary[i] === val) {
-            ary[i] = ary[size - 1];
-            ary.pop();
-            return true;
-        }
+  for (var i = 0, size = ary.length; i < size; i++) {
+    if (ary[i] === val) {
+      ary[i] = ary[size - 1];
+      ary.pop();
+      return true;
     }
-    return false;
+  }
+  return false;
 }
+
 
 /** emit a message to all listening sockets */
 function emitToAll(type, data) {
-    var clients = ioSocket.sockets.sockets;
-    for (var i = 0, size = clients.length; i < size; i++) {
-        clients[i].emit(type, data);
-    }
+  var clients = ioSocket.sockets.sockets;
+  for (var i = 0, size = clients.length; i < size; i++) {
+    clients[i].emit(type, data);
+  }
 }
+
 
 /** run a task at a random time between now and maxIntervalMs and then wait for the task to return before setting up another timer to run it again and again... */
 function setupAwaitTaskTimer(maxIntervalMs, task) {
-    setTimeout(function () {
-        var c = 0;
-        task(function () {
-            c++;
-            if (c === 1) {
-                setupAwaitTaskTimer(maxIntervalMs, task);
-            }
-        });
-    }, Math.random() * maxIntervalMs);
+  setTimeout(function () {
+    var c = 0;
+    task(function () {
+      c++;
+      if (c === 1) {
+        setupAwaitTaskTimer(maxIntervalMs, task);
+      }
+    });
+  }, Math.random() * maxIntervalMs);
 }

@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.0](N/A) - 2016-07-26
+### [0.2.1](N/A) - 2016-07-26
+#### Changed
+* Fixed some indentation, added some documentation, and prepped for knock-knock joke version of server.js
+
+
+--------
+### [0.2.0](https://github.com/TeamworkGuy2/browser-bundle-examples/commit/c24cdd57ae763b8a2df3f159ce536ed1277f4503) - 2016-07-26
 #### Changed
 * Refactored message format and types of messages (now includes 'query').
 * Changed 'when' property from Date to timestamp
