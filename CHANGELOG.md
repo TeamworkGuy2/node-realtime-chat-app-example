@@ -4,13 +4,19 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.1](N/A) - 2016-07-26
+### [0.2.2](N/A) - 2017-04-24
+#### Added
+* server/server-with-jokes.js - containing full server code ready to show
+
+
+--------
+### [0.2.1](https://github.com/TeamworkGuy2/node-realtime-chat-app-example/commit/6ccc81d8822ee67667830f39f0b86b93b871b7c4) - 2016-07-26
 #### Changed
 * Fixed some indentation, added some documentation, and prepped for knock-knock joke version of server.js
 
 
 --------
-### [0.2.0](https://github.com/TeamworkGuy2/browser-bundle-examples/commit/c24cdd57ae763b8a2df3f159ce536ed1277f4503) - 2016-07-26
+### [0.2.0](https://github.com/TeamworkGuy2/node-realtime-chat-app-example/commit/a201b4228586e62570572daf28233bd8889b5fa8) - 2016-07-26
 #### Changed
 * Refactored message format and types of messages (now includes 'query').
 * Changed 'when' property from Date to timestamp
