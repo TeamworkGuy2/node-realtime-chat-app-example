@@ -4,7 +4,13 @@ This project does its best to adhere to [Semantic Versioning](http://semver.org/
 
 
 --------
-### [0.2.2](N/A) - 2017-04-24
+### [0.2.3](N/A) - 2017-04-29
+#### Added
+* test/sql-query-example.js - contains an example script to query a SQL DB
+
+
+--------
+### [0.2.2](https://github.com/TeamworkGuy2/node-realtime-chat-app-example/commit/16dbaaa5f24b65af7661e9f12255734588a0df71) - 2017-04-24
 #### Added
 * server/server-with-jokes.js - containing full server code ready to show
 
